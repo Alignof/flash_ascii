@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>フラッシュ暗算風文字表示</title>
+  <title>FLASH ASCII</title>
   <style>
     body {
       display: flex;
@@ -18,7 +18,7 @@
     .flash-parent {
       background-color: #000;
       width: 100%;
-      height: 100%;
+      height: 80%;
     }
     .flash {
       font-size: 60vw;
@@ -66,9 +66,9 @@
 </head>
 <body>
   <div class="controls">
-    <input type="text" id="input-text" placeholder="表示したい文字列を入力してください">
-    <input type="number" id="time-input" placeholder="切り替え時間 (ミリ秒)" min="100" step="20">
-    <button id="start-button">スタート</button>
+    <input type="text" id="input-text" placeholder="Input display words">
+    <input type="number" id="time-input" placeholder="dispaly time" value="500" min="100" step="20">
+    <button id="start-button">START</button>
   </div>
   <div class="flash-parent">
     <div id="flash-container" class="flash"></div>
