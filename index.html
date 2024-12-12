@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>フラッシュ暗算風文字表示</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: top;
+      align-items: center;
+      height: 100vh;
+      margin: 30px;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    .flash-parent {
+      background-color: #000;
+      width: 100%;
+      height: 100%;
+    }
+    .flash {
+      font-size: 60vw;
+      font-weight: bold;
+      color: #20c020;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+      visibility: hidden;
+    }
+    .flash.visible {
+      visibility: visible;
+    }
+    .controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .controls input {
+      font-size: 1rem;
+      padding: 5px;
+      width: 200px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .controls button {
+      font-size: 1rem;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+    .controls button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <input type="text" id="input-text" placeholder="表示したい文字列を入力してください">
+    <input type="number" id="time-input" placeholder="切り替え時間 (ミリ秒)" min="100" step="20">
+    <button id="start-button">スタート</button>
+  </div>
+  <div class="flash-parent">
+    <div id="flash-container" class="flash"></div>
+  </div>
+
+  <script>
+    const container = document.getElementById('flash-container');
+    const inputField = document.getElementById('input-text');
+    const timeField = document.getElementById('time-input');
+    const startButton = document.getElementById('start-button');
+
+    let index = 0;
+    let text = "";
+    let displayTime = 500; // デフォルトの切り替え時間
+
+    function countdown(callback) {
+      let count = 3;
+      function showCount() {
+        if (count > 0) {
+          container.textContent = count;
+          container.classList.add('visible');
+          setTimeout(() => {
+            container.classList.remove('visible');
+            count--;
+            setTimeout(showCount, 800);
+          }, 800);
+        } else {
+          callback();
+        }
+      }
+      showCount();
+    }
+
+    function showNextCharacter() {
+      if (index < text.length) {
+        container.textContent = text[index].charCodeAt(0).toString(16).toUpperCase();
+        container.classList.add('visible');
+
+        setTimeout(() => {
+          container.classList.remove('visible');
+          index++;
+          setTimeout(showNextCharacter, 100); // 次の文字に切り替えるまでの待機時間
+        }, displayTime);
+      }
+    }
+
+    startButton.addEventListener('click', () => {
+      text = inputField.value;
+      const inputTime = parseInt(timeField.value, 10);
+      if (!isNaN(inputTime) && inputTime >= 100) {
+        displayTime = inputTime;
+      } else {
+        alert("切り替え時間を100ミリ秒以上の数値で入力してください。");
+        return;
+      }
+
+      if (text) {
+        index = 0;
+        countdown(showNextCharacter);
+      } else {
+        alert("文字列を入力してください。");
+      }
+    });
+  </script>
+</body>
+</html>
+
