@@ -40,7 +40,12 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
+      padding: 15px;
       margin-bottom: 20px;
+    }
+    details {
+      width: 100%;
+      text-align: center;
     }
     .controls input {
       font-size: 1rem;
@@ -50,7 +55,7 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-    .controls button {
+    .btn button {
       font-size: 1rem;
       padding: 10px 20px;
       cursor: pointer;
@@ -59,15 +64,20 @@
       border: none;
       border-radius: 5px;
     }
-    .controls button:hover {
+    .btn button:hover {
       background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <div class="controls">
-    <input type="text" id="input-text" placeholder="Input display words">
-    <input type="number" id="time-input" placeholder="dispaly time" value="500" min="100" step="20">
+  <details id="input-details" open>
+    <summary>Config</summary>
+    <div class="controls">
+      <input type="text" id="input-text" placeholder="Input display words">
+      <input type="number" id="time-input" placeholder="dispaly time" value="500" min="100" step="20">
+    </div>
+  </details>
+  <div class="btn">
     <button id="start-button">START</button>
   </div>
   <div class="flash-parent">
@@ -79,6 +89,8 @@
     const inputField = document.getElementById('input-text');
     const timeField = document.getElementById('time-input');
     const startButton = document.getElementById('start-button');
+    const inputDetails = document.getElementById('input-details');
+
 
     let index = 0;
     let text = "";
@@ -126,6 +138,7 @@
       }
 
       if (text) {
+        inputDetails.open = false;
         index = 0;
         countdown(showNextCharacter);
       } else {
