@@ -18,10 +18,10 @@
     .flash-parent {
       background-color: #000;
       width: 100%;
-      height: 80%;
+      height: 100%;
     }
     .flash {
-      font-size: 60vw;
+      font-size: 30vw;
       font-weight: bold;
       color: #20c020;
       padding: 20px;
@@ -42,6 +42,9 @@
       gap: 10px;
       padding: 15px;
       margin-bottom: 20px;
+    }
+    summary {
+      padding: 10px;
     }
     details {
       width: 100%;
@@ -84,12 +87,17 @@
     <div id="flash-container" class="flash"></div>
   </div>
 
+  <audio id="beep-countdown" src="https://www.soundjay.com/buttons/sounds/button-15.mp3" preload="auto"></audio>
+  <audio id="beep-sound" src="https://www.soundjay.com/buttons/sounds/beep-28.mp3" preload="auto"></audio>
+
   <script>
     const container = document.getElementById('flash-container');
     const inputField = document.getElementById('input-text');
     const timeField = document.getElementById('time-input');
     const startButton = document.getElementById('start-button');
     const inputDetails = document.getElementById('input-details');
+    const beepCountDown = document.getElementById('beep-countdown');
+    const beepSound = document.getElementById('beep-sound');
 
 
     let index = 0;
@@ -102,10 +110,12 @@
         if (count > 0) {
           container.textContent = count;
           container.classList.add('visible');
+          beepCountDown.play();
+
           setTimeout(() => {
             container.classList.remove('visible');
             count--;
-            setTimeout(showCount, 800);
+            setTimeout(showCount, 200);
           }, 800);
         } else {
           callback();
@@ -118,6 +128,11 @@
       if (index < text.length) {
         container.textContent = text[index].charCodeAt(0).toString(16).toUpperCase();
         container.classList.add('visible');
+
+        // 音を再生する前に現在の音を停止してリセット
+        beepSound.pause();
+        beepSound.currentTime = 0;
+        beepSound.play();
 
         setTimeout(() => {
           container.classList.remove('visible');
