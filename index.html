@@ -58,6 +58,9 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
+    .text-input {
+      color: #f4f4f4;
+    }
     .btn button {
       font-size: 1rem;
       padding: 10px 20px;
@@ -73,10 +76,11 @@
   </style>
 </head>
 <body>
+  <h1> FLASH ASCII </h1>
   <details id="input-details" open>
     <summary>Config</summary>
     <div class="controls">
-      <input type="text" id="input-text" placeholder="Input display words">
+      <input type="text" id="input-text" placeholder="Input display words", class="text-input">
       <input type="number" id="time-input" placeholder="dispaly time" value="500" min="100" step="20">
     </div>
   </details>
